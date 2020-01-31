@@ -3,6 +3,10 @@
   /* width: 100%; */
   /* margin:0; */
 }
+.page__Articles {
+    padding-inline-start: 0px;
+    ;
+}
 .page__Title {
   font-size: 50px;
   font-family: 'Playfair Display', serif;
@@ -12,12 +16,24 @@
   line-height: 72px;
   margin-bottom: 20px;
   padding: 5px;
+  text-align: center;
 }
 .page__loadedStatement {
     border-bottom: 2px solid #2f2f2f;
     border-top: 2px solid #2f2f2f;
     text-transform: uppercase;
     padding: 7px;
+    text-align: center;
+}
+.page__Slider {
+    opacity: 0.3;
+    transition: 0.3s ease-in;
+    padding-inline-start: 50px
+}
+
+.page__Slider:hover {
+    opacity:1;
+    
 }
 
 .page__Searchbar {
@@ -43,22 +59,24 @@ input {
   border-width: 0px;
   border-style: inset;
   outline: none;
-  
+  width: 200px;
+  transition: 0.3s ease-in; 
 }
 input:hover {
   animation: textShiftLeft 0.5s forwards;
   animation-delay: 0.1s;
+  width: auto
 }
 
 @keyframes textShiftLeft {
   100% {
-    transform: translateX(-120px);
+    transform: translateX(-80px);
   }
 }
 
 .background {
   background: beige;
-  cursor: ;
+  cursor: pointer;
 }
 
 

@@ -1,36 +1,23 @@
-import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
-// import NewsComponent from "./components/NewsComponent"
-import DataManagement from "./components/DataManagement"
-
+import React from "react";
+import "./App.css";
+import DataManagement from "./components/DataManagement";
+import About from "./components/About"
+import { BrowserRouter, Link, Route, Switch, Redirect } from "react-router-dom";
 function App() {
   return (
-    <div className="App">
-      {/* Development Should proceed from the Data side first
-      functional Individual News page // separate page
-      functional NewsComponent in main page. (like the pokemon card)
-      class MapView and Parser
-      |--> method plotlocations 
-      |--> method getlocations return latlong
-      |--> method pullData from newsapi as json and set into state
-      |--> call NewsComponent */}
-      <DataManagement />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-    </div>
+    <BrowserRouter>
+      <header className="Navbar">
+        <Link to="/newspage">News</Link>
+        <Link to="/about">About</Link>
+      </header>
+      <div className="App">
+        <Switch>
+          <Route path="/newspage" component={DataManagement} />
+          <Route path="/about" component={About} />
+          <Redirect to="/newspage"/>
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 

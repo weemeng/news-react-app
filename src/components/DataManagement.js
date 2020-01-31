@@ -9,6 +9,7 @@ import url from "./NewsAPIQuery.js";
 import ColorArray from "./ColorArray.js";
 
 
+
 class DataManagement extends React.Component {
   constructor(props) {
     super(props);
@@ -166,12 +167,18 @@ class DataManagement extends React.Component {
       indivArticle.title.toLowerCase().includes(searchParam.toLowerCase())
     );
     //assume filter = none
-    const showNumber_n = 4; //showing 2n+1
+    // if (window.innerWidth)
+    let showNumber_n = 4; //showing 2n+1
+    if (window.innerWidth <= 1112) {
+      showNumber_n = 2;
+    } else if (window.innerWidth <= 913) {
+      showNumber_n = 1;
+    }
     const sliderArray = [
       Math.max(0, sliderIndex - showNumber_n),
       Math.min(totSize, sliderIndex + showNumber_n + 1)
     ];
-    console.log(sliderArray);
+    // console.log(sliderArray);
 
     const slicedFilter = articleFilter.slice(sliderArray[0], sliderArray[1]);
     const slicedField = sizeField.slice(sliderArray[0], sliderArray[1]);
@@ -225,6 +232,7 @@ class DataManagement extends React.Component {
     return (
       <div className="background">
         <div className="page__Title">News Aggregator</div>
+        <dir></dir>
         <dir className="page__loadedStatement">
           {this.pageLoadedStatement()}
         </dir>

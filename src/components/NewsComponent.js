@@ -22,7 +22,9 @@ function SetDetails(props) {
       <p className="news__sourceDate">
         {props.source} | {time.toDateString()}
       </p>
+      <span className="headline_top">______________</span>
       <p className="news__description">{props.description}</p>
+      <span className="headline_bot">______________</span>
     </div>
   );
 }

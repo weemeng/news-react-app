@@ -4,15 +4,29 @@
   display: block;
   /* background: yellowgreen; */
   padding: 0.1em;
-  height: 400px;
+  height: 420px;
   width: 300px;
   position: absolute;
   align-items: stretch;
   overflow: hidden;
 }
 
+.headline_top {
+  font-weight: 400;
+  font-size: 18px;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+.headline_bot {
+  font-weight: 400;
+  font-size: 18px;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  font-size: 1em;
+}
+
 .news:hover {
-    animation:bounce 1s;
+  animation: bounce 1s;
 }
 
 @keyframes bounce {
@@ -42,6 +56,10 @@
   margin-left: inherit;
   margin-right: inherit;
   margin: 2px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
 }
 .news__sourceDate {
   font-size: 10px;
@@ -60,10 +78,10 @@
   margin: 6px;
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 14px
 }
 .news__img {
   width: 250px;
   max-height: inherit;
   border-width: 10px;
 }
-

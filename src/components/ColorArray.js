@@ -9,16 +9,16 @@ function colorArray(arraySize, centerIndex, totSize) {
 
   if (46 <= centerIndex) {
     colorIndex = totSize - Math.round(totSize - ((arraySize - 1) / 2)) + 1;
-    console.log("colorIndex1 = " + colorIndex + " centerIndex = " + centerIndex)
+    // console.log("colorIndex1 = " + colorIndex + " centerIndex = " + centerIndex)
     // if 46 < centerIndex
   } else if (centerIndex < (arraySize - 1) / 2) {
     // if centerIndex < 4 
     colorIndex = centerIndex;
-    console.log("colorIndex2 = " + colorIndex + " centerIndex = " + centerIndex)
+    // console.log("colorIndex2 = " + colorIndex + " centerIndex = " + centerIndex)
 
   } else {
     colorIndex = Math.floor((arraySize - 1) / 2)
-    console.log("colorIndex3 = " + colorIndex + " centerIndex = " + centerIndex)
+    // console.log("colorIndex3 = " + colorIndex + " centerIndex = " + centerIndex)
   }
   const colorSetArray = Array(arraySize).fill([0, 0, 0]);
   const d_r = (mainColor[0] - sideColor[0]) / arraySize;

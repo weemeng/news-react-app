@@ -1,0 +1,72 @@
+.about-profile {
+  /* background-color:grey; */
+  /* background-image: url("https://c.pxhere.com/photos/80/a3/stadium_lights_sport_backgrounds_arena_illumination_football_game-776982.jpg!d"); */
+
+  /* background-image: url("https://images.hdqwalls.com/download/2019-tesla-model-y-4k-or-3840x2160.jpg"); */
+  background-color:grey;
+  background-image: radial-gradient(grey,white);
+  /* background-image: url("http://getwallpapers.com/wallpaper/full/4/8/9/287120.jpg"); */
+  /* background-blend-mode: soft-light; */
+  /* background-image: url("/downloadedImage/pokeballs.jpg") */
+  background-size: contain;
+  background-repeat: no-repeat;
+  resize: both;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-left: 2em;
+  margin-right: 2em;
+  border: 4px solid black;
+  border-radius: 12px;
+  
+}
+
+.about-text {
+  text-align: justify;
+  font-size: 1.5em;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    color: black;
+  margin-left: 50px;
+  margin-right: 50px;
+  align-self: center;
+  
+}
+
+.about-profile__image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+  border: 3px solid black;
+  border-radius: 50%;
+  padding: 5px;
+  opacity: 0.8;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-profile__image {
+    animation: profile-spin_c infinite 2s;
+    /* animation: profile-spin_cc infinite 2s; */
+  }
+}
+@keyframes profile-spin_c {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes profile-spin_cc {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
