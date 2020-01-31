@@ -113,7 +113,7 @@ class DataManagement extends React.Component {
         err => {
           this.setState({
             newsData_status: "ERROR",
-            state: 1
+            state: 1,
           });
         }
       )
@@ -128,17 +128,11 @@ class DataManagement extends React.Component {
         this.setState({
           startReadingFromSlider: true
         });
+      })
+      .catch((error) => {
+        console.log("REACHED SOME ERROR")
       });
   }
-  //   sendArticlesToChild(article) {
-  //     return article.map(articleData => {
-  //       return (
-  //         <dir>
-  //           <NewsComponent data={articleData} />
-  //         </dir>
-  //       );
-  //     });
-  //   }
   checkValidityBeforeRunning = (validCheck, fn, ...data) => {
     if (!validCheck) {
       return;
@@ -166,8 +160,6 @@ class DataManagement extends React.Component {
     const articleFilter = articleField.filter((indivArticle, index, array) =>
       indivArticle.title.toLowerCase().includes(searchParam.toLowerCase())
     );
-    //assume filter = none
-    // if (window.innerWidth)
     let showNumber_n = 4; //showing 2n+1
     if (window.innerWidth <= 1112) {
       showNumber_n = 2;
@@ -178,7 +170,6 @@ class DataManagement extends React.Component {
       Math.max(0, sliderIndex - showNumber_n),
       Math.min(totSize, sliderIndex + showNumber_n + 1)
     ];
-    // console.log(sliderArray);
 
     const slicedFilter = articleFilter.slice(sliderArray[0], sliderArray[1]);
     const slicedField = sizeField.slice(sliderArray[0], sliderArray[1]);

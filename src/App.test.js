@@ -1,11 +1,19 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, getByTestId, fireEvent } from '@testing-library/react';
 import App from './App';
 
-describe("test 1", () => {
-   it("should be 1", () => {
-     expect(1).toBe(1);
+describe("App", () => {
+   it("should render Navbar component", () => {
+     
+    expect(1).toBe(1);
    })
+  //  it("shoudlXX ", () => {
+  //    const {getByText, getByyTestID} = render(<App />)
+  //    const XX = getByTestId("Candlestickgraph")
+  //    fireEvent.click(candlesticklink)
+  //    expect(XX).toBeInTheDocument();
+  //  })
+  it("should ")
 })
 
 // test('renders learn react link', () => {
