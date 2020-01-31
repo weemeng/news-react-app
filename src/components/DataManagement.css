@@ -1,0 +1,64 @@
+.articles-inline {
+  display: inline-block;
+  /* width: 100%; */
+  /* margin:0; */
+}
+.page__Title {
+  font-size: 50px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 80px;
+  text-transform: uppercase;
+  line-height: 72px;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+.page__loadedStatement {
+    border-bottom: 2px solid #2f2f2f;
+    border-top: 2px solid #2f2f2f;
+    text-transform: uppercase;
+    padding: 7px;
+}
+
+.page__Searchbar {
+  cursor: text;
+  box-sizing: border-box;
+  opacity: 0.8;
+  width: 100%;
+  background: white;
+  border-radius: 22px;
+  max-width: 584px;
+}
+.page__Searchbar__Container {
+  margin: auto;
+  min-width: 410px;
+  width: 500px;
+}
+input {
+  text-rendering: auto;
+  color: -internal-light-dark-color(black, white);
+  text-indent: 0px;
+  display: inline-block;
+  -webkit-appearance: textfield;
+  border-width: 0px;
+  border-style: inset;
+  outline: none;
+  
+}
+input:hover {
+  animation: textShiftLeft 0.5s forwards;
+  animation-delay: 0.1s;
+}
+
+@keyframes textShiftLeft {
+  100% {
+    transform: translateX(-120px);
+  }
+}
+
+.background {
+  background: beige;
+  cursor: ;
+}
+
+
