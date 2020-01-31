@@ -1,6 +1,4 @@
 function colorArray(arraySize, centerIndex, totSize) {
-//   const mainColor = [45, 145, 255];
-//   const sideColor = [199, 199, 199];
   const mainColor = [255, 255, 255];
   const sideColor = [114, 34, 0];
 

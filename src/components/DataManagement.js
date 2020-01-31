@@ -30,7 +30,11 @@ class DataManagement extends React.Component {
     };
   }
   pageLoadedStatement() {
-    return <span>{"Printed at " + this.state.contentUpdatedTime.toDateString()}</span>;
+    return (
+      <span>
+        {"Printed at " + this.state.contentUpdatedTime.toDateString()}
+      </span>
+    );
   }
   componentDidMount() {
     this.setState({
@@ -85,7 +89,7 @@ class DataManagement extends React.Component {
   }
 
   getNews() {
-    console.log(url(this.state.search_external_value))
+    console.log(url(this.state.search_external_value));
     axios(url(this.state.search_external_value))
       .then(
         res => {
@@ -110,7 +114,7 @@ class DataManagement extends React.Component {
         err => {
           this.setState({
             newsData_status: "ERROR",
-            state: 1,
+            state: 1
           });
         }
       )
@@ -126,8 +130,8 @@ class DataManagement extends React.Component {
           startReadingFromSlider: true
         });
       })
-      .catch((error) => {
-        console.log("REACHED SOME ERROR")
+      .catch(error => {
+        console.log("REACHED SOME ERROR");
       });
   }
   checkValidityBeforeRunning = (validCheck, fn, ...data) => {
@@ -146,29 +150,33 @@ class DataManagement extends React.Component {
       search_external_value: event.target.value
     });
   };
-  updateInternalSearch([
-    articles,
-    searchParam,
-    sizeField,
-    sliderIndex,
-    totSize
-  ]) {
-    const articleField = articles;
-    const articleFilter = articleField.filter((indivArticle, index, array) =>
-      indivArticle.title.toLowerCase().includes(searchParam.toLowerCase())
-    );
-    let showNumber_n = 4; //showing 2n+1
-    if (window.innerWidth <= 1112) {
-      showNumber_n = 2;
-    } else if (window.innerWidth <= 913) {
-      showNumber_n = 1;
+  renderNewsArticles([articles, searchParam, sizeField, sliderIndex, totSize]) {
+    // const articleField = articles;
+    // const articleFilter = articleField.filter((indivArticle, index, array) =>
+    //   indivArticle.title.toLowerCase().includes(searchParam.toLowerCase())
+    // );
+    let showNumber_n = 3; //showing 2n+1
+    const innerW = window.innerWidth;
+    switch (true) {
+      case innerW > 2100:
+        showNumber_n = 3;
+        break;
+      case innerW > 1500:
+        showNumber_n = 2;
+        break;
+      case innerW > 900:
+        showNumber_n = 1;
+        break;
+      default:
+        showNumber_n = 3;
+        break;
     }
     const sliderArray = [
       Math.max(0, sliderIndex - showNumber_n),
       Math.min(totSize, sliderIndex + showNumber_n + 1)
     ];
 
-    const slicedFilter = articleFilter.slice(sliderArray[0], sliderArray[1]);
+    const slicedFilter = articles.slice(sliderArray[0], sliderArray[1]);
     const slicedField = sizeField.slice(sliderArray[0], sliderArray[1]);
 
     const colArray = ColorArray(
@@ -176,24 +184,25 @@ class DataManagement extends React.Component {
       sliderIndex,
       totSize
     );
-    const aa = slicedFilter.map((articleData, index) => {
-      return (
-        <span
-          className="articles-inline"
-          style={{
-            width: 300 * slicedField[index],
-            height: 300 * slicedField[index]
-          }}
-        >
-          <NewsComponent data={articleData} color={colArray[index]} />
-        </span>
-      );
-    }, this);
-    return aa;
+    const filteredNewsArticlesComponents = slicedFilter.map(
+      (articleData, index) => {
+        return (
+          <span
+            className="articles-inline"
+            style={{
+              width: 300 * slicedField[index],
+              height: 300 * slicedField[index]
+            }}
+          >
+            <NewsComponent data={articleData} color={colArray[index]} />
+          </span>
+        );
+      },
+      this
+    );
+    return filteredNewsArticlesComponents;
   }
-  getURL = () => {
-    this.getNews();
-  };
+
   sliderCallbackFunction = childData => {
     this.setState({ updatedDate: childData });
   };
@@ -212,7 +221,7 @@ class DataManagement extends React.Component {
 
   handleExternalKeyPress = event => {
     if (event.key === "Enter") {
-      this.getURL();
+      this.getNews();
     }
   };
 
@@ -235,17 +244,24 @@ class DataManagement extends React.Component {
             />
           </div>
         </div>
-        
+
         <dir className="page__Articles">
           {this.checkValidityBeforeRunning(
             this.state.newsData_valid,
-            this.updateInternalSearch,
+            this.renderNewsArticles,
             this.state.newsData_articles,
             this.state.search_internal_value,
             this.state.sizeArray,
             this.state.sliderIndex,
             this.state.newsData_totArticles
           )}
+          {/* {this.renderNewsArticles(
+            this.state.newsData_articles,
+            this.state.search_internal_value,
+            this.state.sizeArray,
+            this.state.sliderIndex,
+            this.state.newsData_totArticles
+          )} */}
         </dir>
         <dir className="page__Slider">
           <Sliderbar
