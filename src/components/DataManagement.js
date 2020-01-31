@@ -7,9 +7,6 @@ import Sliderbar from "./Sliderbar";
 import MyOwnDateParser from "./MyOwnDateParser.js";
 import url from "./NewsAPIQuery.js";
 import ColorArray from "./ColorArray.js";
-
-
-
 class DataManagement extends React.Component {
   constructor(props) {
     super(props);
