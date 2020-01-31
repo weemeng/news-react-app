@@ -167,8 +167,11 @@ class DataManagement extends React.Component {
       case innerW > 900:
         showNumber_n = 1;
         break;
+      case innerW > 500:
+        showNumber_n = 0;
+        break;
       default:
-        showNumber_n = 3;
+        showNumber_n = 0;
         break;
     }
     const sliderArray = [
