@@ -8,14 +8,13 @@ import axios from "axios";
 function SetDetails(props) {
   let time = MyOwnDateParser(props.time);
   return (
-    <div>
+    <div onClick={() => window.open(props.url)}>
       <p className="news__title">{props.title}</p>
       <p>
         <img
           src={props.imgsrc}
           alt={props.title}
-          className="news__img"
-          onClick={() => window.open(props.url)}
+          className="news__img"          
         ></img>
       </p>
       <p className="news__sourceDate">

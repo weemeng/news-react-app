@@ -140,11 +140,6 @@ class DataManagement extends React.Component {
     }
     return fn(data);
   };
-  updateInternalInput = event => {
-    this.setState({
-      search_internal_value: event.target.value
-    });
-  };
   updateExteralInput = event => {
     this.setState({
       search_external_value: event.target.value
@@ -232,10 +227,9 @@ class DataManagement extends React.Component {
     return (
       <div className="background">
         <div className="page__Title">News Aggregator</div>
-        <dir></dir>
-        <dir className="page__loadedStatement">
+        <div className="page__loadedStatement">
           {this.pageLoadedStatement()}
-        </dir>
+        </div>
         <div className="page__Searchbar__Container">
           <div className="page__Searchbar">
             <input
@@ -247,8 +241,15 @@ class DataManagement extends React.Component {
             />
           </div>
         </div>
+        <div className="page__Slider">
+          <Sliderbar
+            earliest={this.state.earliestDate}
+            latest={this.state.latestDate}
+            sliderCallback={this.sliderCallbackFunction}
+          />
+        </div>
 
-        <dir className="page__Articles">
+        <div className="page__Articles">
           {this.checkValidityBeforeRunning(
             this.state.newsData_valid,
             this.renderNewsArticles,
@@ -265,14 +266,7 @@ class DataManagement extends React.Component {
             this.state.sliderIndex,
             this.state.newsData_totArticles
           )} */}
-        </dir>
-        <dir className="page__Slider">
-          <Sliderbar
-            earliest={this.state.earliestDate}
-            latest={this.state.latestDate}
-            sliderCallback={this.sliderCallbackFunction}
-          />
-        </dir>
+        </div>
       </div>
     );
   }

@@ -1,4 +1,17 @@
 .spacing {
-    /* height: 160px; */
-    margin: 50px
+  /* height: 160px; */
+  margin: 50px;
 }
+.Slider {
+  margin-right: auto;
+  margin-left: auto;
+}
+.Slider__inner {
+  margin-left: auto;
+  margin-right: auto;
+  margin: 3%;
+  height: 60;
+  width: 95%;
+}
+/* margin-left: auto;
+margin-right: auto; */

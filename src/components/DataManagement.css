@@ -8,10 +8,9 @@
     ;
 }
 .page__Title {
-  font-size: 50px;
   font-family: 'Playfair Display', serif;
   font-weight: 900;
-  font-size: 80px;
+  font-size: 12vw;
   text-transform: uppercase;
   line-height: 72px;
   margin-bottom: 20px;
@@ -26,14 +25,18 @@
     text-align: center;
 }
 .page__Slider {
-    opacity: 0.3;
+    opacity: 0.1;
     transition: 0.3s ease-in;
-    padding-inline-start: 50px
+    padding-left: 50px;
+    padding-right: 50px;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    border-width: thick;
+    padding-bottom: 50px;
 }
 
 .page__Slider:hover {
-    opacity:1;
-    
+    opacity:1;    
 }
 
 .page__Searchbar {

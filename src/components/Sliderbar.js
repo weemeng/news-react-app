@@ -3,7 +3,7 @@ import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
 import { SliderRail, Handle, Track, Tick } from "./SliderbarComponent"; // example render components - source below
 import { subDays, startOfToday, format, isThisSecond } from "date-fns";
 import { scaleTime } from "d3-scale";
-import "./Sliderbar.css"
+import "./Sliderbar.css";
 
 const sliderStyle = {
   position: "relative",
@@ -68,7 +68,9 @@ class Sliderbar extends Component {
       this.onAvailableData();
     }
     const minHoursDiff = 1;
-    const calcDiff = (Math.abs(prevState.updated - this.state.updated)/1000/3600>=minHoursDiff)    
+    const calcDiff =
+      Math.abs(prevState.updated - this.state.updated) / 1000 / 3600 >=
+      minHoursDiff;
     if (calcDiff) {
       this.sendData();
     }
@@ -103,10 +105,8 @@ class Sliderbar extends Component {
       .map(d => +d);
 
     return (
-      <div>
-        <div className="spacing"></div>
-        {/* {this.onAvailableData()} */}
-        <div style={{ marginLeft: "4%", marginRight: "4%", margin: "1%", height: 60, width: "90%" }}>
+      <div className="Slider">
+        <div className="Slider__inner">
           <Slider
             mode={1}
             step={halfHour}
@@ -115,7 +115,7 @@ class Sliderbar extends Component {
             onUpdate={this.onUpdate}
             onChange={this.onChange}
             values={[+selected]}
-            >
+          >
             <Rail>
               {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
             </Rail>
@@ -124,10 +124,10 @@ class Sliderbar extends Component {
                 <div>
                   {handles.map(handle => (
                     <Handle
-                    key={handle.id}
-                    handle={handle}
-                    domain={[+min, +max]}
-                    getHandleProps={getHandleProps}
+                      key={handle.id}
+                      handle={handle}
+                      domain={[+min, +max]}
+                      getHandleProps={getHandleProps}
                     />
                   ))}
                 </div>
@@ -138,12 +138,12 @@ class Sliderbar extends Component {
                 <div>
                   {tracks.map(({ id, source, target }) => (
                     <Track
-                    key={id}
-                    source={source}
-                    target={target}
-                    getTrackProps={getTrackProps}
+                      key={id}
+                      source={source}
+                      target={target}
+                      getTrackProps={getTrackProps}
                     />
-                    ))}
+                  ))}
                 </div>
               )}
             </Tracks>
@@ -152,23 +152,22 @@ class Sliderbar extends Component {
                 <div>
                   {ticks.map(tick => (
                     <Tick
-                    key={tick.id}
-                    tick={tick}
-                    count={ticks.length}
-                    format={formatTick}
+                      key={tick.id}
+                      tick={tick}
+                      count={ticks.length}
+                      format={formatTick}
                     />
-                    ))}
+                  ))}
                 </div>
               )}
             </Ticks>
           </Slider>
         </div>
-        {this.renderDateTime(selected, "Selected")}
-        {this.renderDateTime(updated, "Updated")}
+        {/* {this.renderDateTime(selected, "Selected")}
+        {this.renderDateTime(updated, "Updated")} */}
       </div>
     );
   }
 }
 
 export default Sliderbar;
-// render(<App />, document.getElementById("root"));
