@@ -46,7 +46,7 @@
   width: 100%;
   background: white;
   border-radius: 22px;
-  max-width: 50vw;
+  max-width: 70vw;
   
 }
 .page__Searchbar__Container {
@@ -75,7 +75,7 @@ input:hover {
 
 @keyframes textShiftLeft {
   100% {
-    transform: translateX(-80px);
+    transform: translateX(-8vw);
   }
 }
 
