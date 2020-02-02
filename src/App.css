@@ -1,12 +1,13 @@
 .App {
   text-align: center;
   background-color: beige;
-  height: 100vh;
+  height: 96vh;
 }
 
 .Navbar {
   background-color: beige;
   overflow: hidden;
+  height: 4vh;
   /* border-radius: 12px;   */
 }
 
