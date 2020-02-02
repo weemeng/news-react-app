@@ -64,13 +64,12 @@ input {
   border-width: 0px;
   border-style: inset;
   outline: none;
-  width: 200px;
+  width: 50vw;
   transition: 0.3s ease-in; 
 }
 input:hover {
   animation: textShiftLeft 0.5s forwards;
   animation-delay: 0.1s;
-  width: auto
 }
 
 @keyframes textShiftLeft {
