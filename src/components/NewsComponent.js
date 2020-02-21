@@ -3,7 +3,6 @@
 import React from "react";
 import "./NewsComponent.css";
 import MyOwnDateParser from "./MyOwnDateParser.js";
-import axios from "axios";
 
 function SetDetails(props) {
   let time = MyOwnDateParser(props.time);

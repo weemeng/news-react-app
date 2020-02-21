@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
 import { SliderRail, Handle, Track, Tick } from "./SliderbarComponent"; // example render components - source below
-import { subDays, startOfToday, format, isThisSecond } from "date-fns";
+import { subDays, startOfToday, format } from "date-fns";
 import { scaleTime } from "d3-scale";
 import "./Sliderbar.css";
 
@@ -97,7 +97,7 @@ class Sliderbar extends Component {
   }
 
   render() {
-    const { min, max, selected, updated } = this.state;
+    const { min, max, selected } = this.state;
 
     const dateTicks = scaleTime()
       .domain([min, max])
