@@ -3,20 +3,48 @@
 // const categoryList = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
 
 const QueryParam = {
-    country: "us",
-    category: "",
-    sources: "",
-    q: "trump",
-    pageSize: 50,
-    apiKey: process.env.REACT_APP_SECRET,
+  country: "us",
+  category: "",
+  sources: "",
+  q: "trump",
+  pageSize: 50,
+  apiKey: process.env.REACT_APP_SECRET
+};
+// country = "us"
+// q = ""
+// qInTitle = ""
+// earliestDate
+// latestDate
+
+const setQueryStringHerokuEndpoint = search => {
+  const queryString = [];
+  if (!!search.query) {
+    queryString.push(`q=${search.query}`);
+  }
+  if (!!search.qInTitle) {
+    queryString.push(`qInTitle=${search.qInTitle}`);
+  }
+  if (!!search.country) {
+    queryString.push(`country=${search.country}`);
+  }
+//   if (!!search.earliestDate) {
+//     queryString.push(`earliestDate=${search.earliestDate.toISOString()}`);
+//   }
+  if (!!search.latestDate) {
+    queryString.push(`latestDate=${search.latestDate.toISOString()}`);
+  }
+  return queryString.length > 0 ? "?" + queryString.join("&") : "";
+};
+function setURL(searchInput) {
+  // country=${QueryParam.country}&
+  //   const inputQ = searchInput;
+  //   let outputURL = `https://newsapi.org/v2/everything?q=${inputQ}&pageSize=${QueryParam.pageSize}&apiKey=${QueryParam.apiKey}`;
+  //   console.log(outputURL);
+  // return outputURL
+  const baseURL = `https://intense-sea-36031.herokuapp.com/news`
+  const queryURL = setQueryStringHerokuEndpoint(searchInput);
+  console.log(baseURL + queryURL)
+  return baseURL + queryURL;
 }
 
-function setURL(queryInput) {
-    //country=${QueryParam.country}&
-    const inputQ = queryInput;
-    let outputURL = `https://newsapi.org/v2/everything?q=${inputQ}&pageSize=${QueryParam.pageSize}&apiKey=${QueryParam.apiKey}`;
-    console.log(outputURL)
-    return outputURL
-}
-
-export default setURL
+export default setURL;

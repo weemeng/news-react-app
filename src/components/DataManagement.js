@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import NewsComponent from "./NewsComponent";
-import KeyFramesTest from "./Testing/TestKeyFrames"
+import KeyFramesTest from "./Testing/TestKeyFrames";
 import "./DataManagement.css";
 import Sliderbar from "./Slider/Sliderbar";
 import url from "./NewsAPIQuery.js";
@@ -10,6 +10,7 @@ import {
   determineTabsToShow,
   positionClosenessArray
 } from "../utils/tabLayout.js";
+// const { Menu, Dropdown, Icon, message } = require("antd");
 
 class DataManagement extends React.Component {
   constructor(props) {
@@ -18,7 +19,12 @@ class DataManagement extends React.Component {
       newsData_articles: [],
       newsData_valid: false,
       newsData_totArticles: 50,
-      search_external_value: "trump",
+      search: {
+        query: "obama",
+        country: "us",
+        earliestDate: new Date(),
+        latestDate: new Date()
+      },
       earliestDate: new Date(),
       latestDate: new Date(),
       updatedDate: new Date(),
@@ -55,11 +61,12 @@ class DataManagement extends React.Component {
   }
 
   getNews() {
-    axios(url(this.state.search_external_value))
+    axios(url(this.state.search))
       .then(res => {
         if (res.data.status !== "ok") {
           throw new Error("Invalid data");
         }
+        console.log(res.data)
         res.data.articles.sort((a, b) => {
           return a.publishedAt - b.publishedAt;
         });
@@ -75,12 +82,6 @@ class DataManagement extends React.Component {
         console.log(error.message);
       });
   }
-
-  updateExteralInput = event => {
-    this.setState({
-      search_external_value: event.target.value
-    });
-  };
 
   renderNewsArticles() {
     const InArticles = this.state.newsData_articles;
@@ -114,8 +115,7 @@ class DataManagement extends React.Component {
             <NewsComponent data={articleData} color={colArray[index]} />
           </span>
         );
-      },
-      this
+      }
     );
     return filteredNewsArticlesComponents;
   }
@@ -130,6 +130,25 @@ class DataManagement extends React.Component {
     }
   };
 
+  updateExteralInput = event => {
+    console.log(event);
+    this.setState({
+      search: { query: event.target.value }
+    });
+  };
+
+  updateSearchCountry = event => {
+    this.setState({
+      search: { country: event.target.value }
+    });
+  };
+
+  updateDate = event => {
+    console.log(event);
+    this.setState({
+      search: { earliestDate: event.target.value }
+    });
+  };
   render() {
     return (
       <div className="background">
@@ -145,9 +164,41 @@ class DataManagement extends React.Component {
             <input
               type="text"
               placeholder="Search External"
-              value={this.state.search_external_value}
+              value={this.state.search.query}
               onChange={this.updateExteralInput}
               onKeyPress={this.handleExternalKeyPress}
+            />
+          </div>
+        </div>
+        <div className="page__Options__Container">
+          {/* <Dropdown overlay={this.menu}>
+            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              Country <Icon type="down" />
+            </a>
+          </Dropdown> */}
+          <div className="page__Options">
+            <input
+              type="text"
+              placeholder="Options"
+              value={this.state.search.country}
+              onChange={this.updateSearchCountry}
+              onKeyPress={this.handleExternalKeyPress}
+            />
+          </div>
+          <div>
+            <input
+              type="date"
+              placeholder="EarliestDate"
+              value={this.state.search.earliestDate}
+              onChange={this.updateDate}
+              // onKeyPress={this.handleExternalKeyPress}
+            />
+            <input
+              type="date"
+              placeholder="LatestDate"
+              value={this.state.search.latestDate}
+              onChange={this.updateDate}
+              // onKeyPress={this.handleExternalKeyPress}
             />
           </div>
         </div>

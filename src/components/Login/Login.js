@@ -7,7 +7,6 @@ class Login extends React.Component {
     super(props);
     this.state = {
       data: "hihi",
-      baseURL: `https://intense-sea-36031.herokuapp.com`,
       username: "super",
       password: "123456789",
       loginStatus: false,
@@ -44,7 +43,7 @@ class Login extends React.Component {
 
   attemptLogin() {
     axios
-      .post(this.state.baseURL + "/user/login", {
+      .post("/user/login", {
         username: this.state.username,
         password: this.state.password
       })
@@ -61,10 +60,10 @@ class Login extends React.Component {
         });
       });
   }
-
+  
   attemptLogout() {
     axios
-      .post(this.state.baseURL + "/user/logout")
+      .post("/user/logout")
       .then(res => {
         this.setState({
           username: "",
@@ -74,13 +73,14 @@ class Login extends React.Component {
         });
       })
       .catch(err => {
+        console.log("AXIOS Unable to log out");
         console.log(err);
       });
-  }
-
-  createNewUser() {
-    axios
-      .post(this.state.baseURL + "user/newUser", {
+    }
+    
+    createNewUser() {
+      axios
+      .post("user/newUser", {
         username: this.state.username,
         password: this.state.password
       })
@@ -90,6 +90,7 @@ class Login extends React.Component {
         });
       })
       .catch(err => {
+        console.log("Unable to Create New User");
         console.log(err);
       });
   }

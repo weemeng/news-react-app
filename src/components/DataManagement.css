@@ -34,6 +34,7 @@
     width: -webkit-fill-available;
     border-width: thick;
     padding-bottom: 50px;
+    text-align:center
 }
 
 .page__Slider:hover {
@@ -72,8 +73,6 @@ input:hover {
   animation: textShiftLeft 0.5s forwards;
   animation-delay: 0.1s;
 }
-
-
 
 .background {
   background: beige;
