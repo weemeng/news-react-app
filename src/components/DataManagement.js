@@ -1,15 +1,16 @@
 import React from "react";
 import axios from "axios";
 import NewsComponent from "./NewsComponent";
+import KeyFramesTest from "./Testing/TestKeyFrames"
 import "./DataManagement.css";
 import Sliderbar from "./Slider/Sliderbar";
-import MyOwnDateParser from "./MyOwnDateParser.js";
 import url from "./NewsAPIQuery.js";
 import {
   colorArray,
   determineTabsToShow,
   positionClosenessArray
 } from "../utils/tabLayout.js";
+
 class DataManagement extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +30,6 @@ class DataManagement extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({});
     this.getNews();
   }
   componentDidUpdate(prevProps, prevState) {
@@ -38,48 +38,11 @@ class DataManagement extends React.Component {
     }
     if (!!this.state.newsData_valid) {
       if (prevState.updatedDate !== this.state.updatedDate) {
-        this.closenessIndexCalculator(this.state.newsData_articles);
+        this.setArticlePosition(this.state.newsData_articles);
       }
     }
   }
-  getNews() {
-    axios(url(this.state.search_external_value))
-      .then(res => {
-        if (res.data.status !== "ok") {
-          throw new Error("Invalid data");
-        }
-        res.data.articles.sort((a, b) => {
-          let temp_a = MyOwnDateParser(a.publishedAt);
-          let temp_b = MyOwnDateParser(b.publishedAt);
-          return temp_a > temp_b ? -1 : temp_a < temp_b ? 1 : 0;
-        });
-        this.setState({
-          newsData_articles: res.data.articles,
-          newsData_valid: true
-        });
-      })
-      .then(() => {
-        if (this.state.newsData_valid) {
-          this.getEarliestandLatestTime(this.state.newsData_articles);
-        }
-      })
-      .catch(error => {
-        console.log("REACHED SOME ERROR");
-      });
-  }
-  pageLoadedStatement() {
-    return (
-      <span>
-        {"Printed at " + this.state.contentUpdatedTime.toDateString()}
-      </span>
-    );
-  }
-  updateExteralInput = event => {
-    this.setState({
-      search_external_value: event.target.value
-    });
-  };
-  closenessIndexCalculator(articles) {
+  setArticlePosition(articles) {
     const { newArray, index } = positionClosenessArray(
       articles,
       this.state.updatedDate,
@@ -90,6 +53,34 @@ class DataManagement extends React.Component {
       sliderIndex: index
     });
   }
+
+  getNews() {
+    axios(url(this.state.search_external_value))
+      .then(res => {
+        if (res.data.status !== "ok") {
+          throw new Error("Invalid data");
+        }
+        res.data.articles.sort((a, b) => {
+          return a.publishedAt - b.publishedAt;
+        });
+        const articles = res.data.articles;
+        this.setState({
+          newsData_articles: articles,
+          newsData_valid: true,
+          earliestDate: new Date(articles[articles.length - 1].publishedAt),
+          latestDate: new Date(articles[0].publishedAt)
+        });
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
+
+  updateExteralInput = event => {
+    this.setState({
+      search_external_value: event.target.value
+    });
+  };
 
   renderNewsArticles() {
     const InArticles = this.state.newsData_articles;
@@ -133,18 +124,6 @@ class DataManagement extends React.Component {
     this.setState({ updatedDate: childData });
   };
 
-  getEarliestandLatestTime = () => {
-    const articleField = this.state.newsData_articles;
-    const early = MyOwnDateParser(
-      articleField[articleField.length - 1].publishedAt
-    );
-    const late = MyOwnDateParser(articleField[0].publishedAt);
-    this.setState({
-      earliestDate: early,
-      latestDate: late
-    });
-  };
-
   handleExternalKeyPress = event => {
     if (event.key === "Enter") {
       this.getNews();
@@ -154,9 +133,12 @@ class DataManagement extends React.Component {
   render() {
     return (
       <div className="background">
+        {/* <KeyFramesTest /> */}
         <div className="page__Title">News Aggregator</div>
         <div className="page__loadedStatement">
-          {this.pageLoadedStatement()}
+          <span>
+            {"Printed at " + this.state.contentUpdatedTime.toDateString()}
+          </span>
         </div>
         <div className="page__Searchbar__Container">
           <div className="page__Searchbar">

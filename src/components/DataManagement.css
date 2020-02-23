@@ -13,8 +13,9 @@
   font-size: 8vw;
   text-transform: uppercase;
   line-height: 72px;
-  margin-bottom: 20px;
   padding: 5px;
+  padding-top: 2vw;
+  padding-bottom: 1.5vw;
   text-align: center;
 }
 .page__loadedStatement {
@@ -72,11 +73,7 @@ input:hover {
   animation-delay: 0.1s;
 }
 
-@keyframes textShiftLeft {
-  100% {
-    transform: translateX(-8vw);
-  }
-}
+
 
 .background {
   background: beige;

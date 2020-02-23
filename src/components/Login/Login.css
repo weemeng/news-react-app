@@ -1,0 +1,22 @@
+input {
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    text-indent: 0px;
+    display: inline-block;
+    -webkit-appearance: textfield;
+    border-width: 0px;
+    border-style: inset;
+    outline: none;
+    width: 20vw;
+    transition: 0.3s ease-in; 
+  }
+  /* input:hover {
+    animation: textShiftLeft 0.5s forwards;
+    animation-delay: 0.1s;
+  } */
+  /* @keyframes textShiftLeft {
+    100% {
+      transform: scaleX(1.4);
+      
+    }
+  } */
