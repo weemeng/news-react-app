@@ -46,8 +46,8 @@ function positionClosenessArray(articles, updatedDate, sizeArray) {
   const size_init = 1 / size_decay_multiplier;
   let index = 0;
   for (let i = 1; i < articles.length; i++) {
-    const indexDate = new Date(articles[index].publishedAt);
-    const articleDate = new Date(articles[i].publishedAt);
+    const indexDate = new Date(articles[index].publisher.publishedAt);
+    const articleDate = new Date(articles[i].publisher.publishedAt);
     if (
       Math.abs(articleDate - updatedDate) < Math.abs(indexDate - updatedDate)
     ) {

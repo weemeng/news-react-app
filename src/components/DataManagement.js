@@ -63,19 +63,17 @@ class DataManagement extends React.Component {
   getNews() {
     axios(url(this.state.search))
       .then(res => {
-        if (res.data.status !== "ok") {
+        if (!res.data) {
           throw new Error("Invalid data");
         }
-        console.log(res.data)
-        res.data.articles.sort((a, b) => {
-          return a.publishedAt - b.publishedAt;
-        });
-        const articles = res.data.articles;
+        const articles = res.data;
+        console.log(articles)
+        articles.sort((a,b) => a.publisher.publishedAt - b.publisher.publishedAt)
         this.setState({
           newsData_articles: articles,
           newsData_valid: true,
-          earliestDate: new Date(articles[articles.length - 1].publishedAt),
-          latestDate: new Date(articles[0].publishedAt)
+          earliestDate: new Date(articles[articles.length - 1].publisher.publishedAt),
+          latestDate: new Date(articles[0].publisher.publishedAt)
         });
       })
       .catch(error => {
@@ -89,7 +87,6 @@ class DataManagement extends React.Component {
     const InSliderIndex = this.state.sliderIndex;
     const IntotArticles = this.state.newsData_totArticles;
     const showNumber_n = determineTabsToShow();
-
     const sliderArray = [
       Math.max(0, InSliderIndex - showNumber_n),
       Math.min(IntotArticles, InSliderIndex + showNumber_n + 1)
@@ -185,7 +182,7 @@ class DataManagement extends React.Component {
               onKeyPress={this.handleExternalKeyPress}
             />
           </div>
-          <div>
+          {/* <div>
             <input
               type="date"
               placeholder="EarliestDate"
@@ -200,7 +197,7 @@ class DataManagement extends React.Component {
               onChange={this.updateDate}
               // onKeyPress={this.handleExternalKeyPress}
             />
-          </div>
+          </div> */}
         </div>
         <div className="page__Slider">
           <Sliderbar

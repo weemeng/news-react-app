@@ -15,7 +15,7 @@ class Login extends React.Component {
   }
   componentDidMount() {
     this.attemptGetRequest();
-    axios.get(this.state.baseURL).then(res => {
+    axios.get("").then(res => {
       this.setState({
         data: JSON.stringify(Object(res.data))
       });
@@ -32,7 +32,7 @@ class Login extends React.Component {
     });
   };
   attemptGetRequest() {
-    axios.get(this.state.baseURL + "/user").then(res => {
+    axios.get("/user").then(res => {
       this.setState({
         loginStatus: true
       });

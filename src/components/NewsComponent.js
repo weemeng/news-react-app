@@ -5,7 +5,7 @@ import "./NewsComponent.css";
 import MyOwnDateParser from "./MyOwnDateParser.js";
 
 function SetDetails(props) {
-  let time = MyOwnDateParser(props.time);
+  let time = new Date(props.time);
   return (
     <div onClick={() => window.open(props.url)}>
       <p className="news__title">{props.title}</p>
@@ -34,8 +34,8 @@ class NewsComponent extends React.Component {
     return (
       <SetDetails
         title={inputArray.title}
-        source={inputArray.source.name}
-        time={inputArray.publishedAt}
+        source={inputArray.publisher.source.name}
+        time={inputArray.publisher.publishedAt}
         imgsrc={inputArray.urlToImage}
         url={inputArray.url}
         description={inputArray.description}
