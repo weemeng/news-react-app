@@ -4,13 +4,16 @@ import NewsComponent from "./NewsComponent";
 import KeyFramesTest from "./Testing/TestKeyFrames";
 import "./DataManagement.css";
 import Sliderbar from "./Slider/Sliderbar";
-import url from "./NewsAPIQuery.js";
+import setURL from "./APIQuery/NewsAPIQuery.js";
 import {
   colorArray,
   determineTabsToShow,
   positionClosenessArray
 } from "../utils/tabLayout.js";
 // const { Menu, Dropdown, Icon, message } = require("antd");
+
+let oneWeekAgo = new Date();
+oneWeekAgo = new Date(oneWeekAgo.setDate(oneWeekAgo.getDate()-7))
 
 class DataManagement extends React.Component {
   constructor(props) {
@@ -20,12 +23,12 @@ class DataManagement extends React.Component {
       newsData_valid: false,
       newsData_totArticles: 50,
       search: {
-        query: "obama",
-        country: "us",
+        query: "woods",
+        country: "",
         earliestDate: new Date(),
         latestDate: new Date()
       },
-      earliestDate: new Date(),
+      earliestDate: oneWeekAgo,
       latestDate: new Date(),
       updatedDate: new Date(),
       contentUpdatedTime: new Date(),
@@ -39,9 +42,9 @@ class DataManagement extends React.Component {
     this.getNews();
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.contentUpdatedTime !== this.state.contentUpdatedTime) {
-      this.pageLoadedStatement();
-    }
+    // if (prevState.contentUpdatedTime !== this.state.contentUpdatedTime) {
+    //   this.pageLoadedStatement();
+    // }
     if (!!this.state.newsData_valid) {
       if (prevState.updatedDate !== this.state.updatedDate) {
         this.setArticlePosition(this.state.newsData_articles);
@@ -61,13 +64,14 @@ class DataManagement extends React.Component {
   }
 
   getNews() {
-    axios(url(this.state.search))
+    console.log(setURL(this.state.search))
+    axios(setURL(this.state.search))
       .then(res => {
         if (!res.data) {
           throw new Error("Invalid data");
         }
         const articles = res.data;
-        console.log(articles)
+        console.log(articles.length)
         articles.sort((a,b) => a.publisher.publishedAt - b.publisher.publishedAt)
         this.setState({
           newsData_articles: articles,

@@ -52,10 +52,11 @@ class Sliderbar extends Component {
     //update if earliest and latest
     const MS_TO_DAYS = 1 / 1000 / 3600 / 24;
     const { earliest, latest } = this.props;
+    console.log(earliest, latest);
     if (latest - earliest < 10) {
       return;
     } else {
-      const dateDiff = Math.ceil(latest - earliest) * MS_TO_DAYS;
+      const dateDiff = Math.ceil((latest - earliest) * MS_TO_DAYS);
       const date_earliest = subDays(this.state.max, dateDiff);
       this.setState({
         min: date_earliest
@@ -67,11 +68,10 @@ class Sliderbar extends Component {
     if (prevProps.earliest - this.props.earliest !== 0) {
       this.onAvailableData();
     }
-    const minHoursDiff = 1;
-    const calcDiff =
-      Math.abs(prevState.updated - this.state.updated) / 1000 / 3600 >=
-      minHoursDiff;
-    if (calcDiff) {
+    const HALF_HOUR_IN_MS = 1000 * 1800;
+    const isTriggered =
+      Math.abs(prevState.updated - this.state.updated) / HALF_HOUR_IN_MS >= 1;
+    if (isTriggered) {
       this.sendData();
     }
   }
@@ -163,8 +163,6 @@ class Sliderbar extends Component {
             </Ticks>
           </Slider>
         </div>
-        {/* {this.renderDateTime(selected, "Selected")}
-        {this.renderDateTime(updated, "Updated")} */}
       </div>
     );
   }
