@@ -1,7 +1,12 @@
 const React = require("react");
+const  { Dropdown } = require("semantic-ui-react");
 const axios = require("../Config/axios");
 require("./Login.css");
 
+const countryOptions = [
+  { key: "us", value: "us", flag: "us", text: "United States" },
+  { key: "sg", value: "sg", flag: "sg", text: "Singapore" },
+];
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -32,13 +37,16 @@ class Login extends React.Component {
     });
   };
   attemptGetRequest() {
-    axios.get("/user").then(res => {
-      this.setState({
-        loginStatus: true
+    axios
+      .get("/user")
+      .then(res => {
+        this.setState({
+          loginStatus: true
+        });
+      })
+      .catch(err => {
+        console.log("User not logged in");
       });
-    }).catch(err => {
-      console.log("User not logged in")
-    });
   }
 
   attemptLogin() {
@@ -60,7 +68,7 @@ class Login extends React.Component {
         });
       });
   }
-  
+
   attemptLogout() {
     axios
       .post("/user/logout")
@@ -76,10 +84,10 @@ class Login extends React.Component {
         console.log("AXIOS Unable to log out");
         console.log(err);
       });
-    }
-    
-    createNewUser() {
-      axios
+  }
+
+  createNewUser() {
+    axios
       .post("user/newUser", {
         username: this.state.username,
         password: this.state.password
@@ -104,6 +112,15 @@ class Login extends React.Component {
   render() {
     return (
       <div>
+        <div>
+          <Dropdown
+            placeholder="Select Country"
+            fluid
+            search
+            selection
+            options={countryOptions}
+          />
+        </div>
         <div>
           {!this.state.loginStatus ? (
             <div>

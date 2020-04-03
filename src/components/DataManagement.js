@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import NewsComponent from "./NewsComponent";
-import KeyFramesTest from "./Testing/TestKeyFrames";
+import NewsCards from "./NewsCards/NewsCards";
+// import KeyFramesTest from "./Testing/TestKeyFrames";
 import "./DataManagement.css";
 import Sliderbar from "./Slider/Sliderbar";
 import setURL from "./APIQuery/NewsAPIQuery.js";
@@ -13,7 +13,9 @@ import {
 // const { Menu, Dropdown, Icon, message } = require("antd");
 
 let oneWeekAgo = new Date();
-oneWeekAgo = new Date(oneWeekAgo.setDate(oneWeekAgo.getDate()-7))
+oneWeekAgo = new Date(oneWeekAgo.setDate(oneWeekAgo.getDate() - 7));
+
+
 
 class DataManagement extends React.Component {
   constructor(props) {
@@ -23,10 +25,10 @@ class DataManagement extends React.Component {
       newsData_valid: false,
       newsData_totArticles: 50,
       search: {
-        query: "woods",
+        query: "obama",
         country: "",
-        earliestDate: new Date(),
-        latestDate: new Date()
+        earliestDate: undefined,
+        latestDate: undefined
       },
       earliestDate: oneWeekAgo,
       latestDate: new Date(),
@@ -64,19 +66,23 @@ class DataManagement extends React.Component {
   }
 
   getNews() {
-    console.log(setURL(this.state.search))
+    console.log(this.state.search);
     axios(setURL(this.state.search))
       .then(res => {
         if (!res.data) {
           throw new Error("Invalid data");
         }
         const articles = res.data;
-        console.log(articles.length)
-        articles.sort((a,b) => a.publisher.publishedAt - b.publisher.publishedAt)
+        articles.sort(
+          (a, b) => a.publisher.publishedAt - b.publisher.publishedAt
+        );
+        console.log(articles);
         this.setState({
           newsData_articles: articles,
           newsData_valid: true,
-          earliestDate: new Date(articles[articles.length - 1].publisher.publishedAt),
+          earliestDate: new Date(
+            articles[articles.length - 1].publisher.publishedAt
+          ),
           latestDate: new Date(articles[0].publisher.publishedAt)
         });
       })
@@ -90,19 +96,28 @@ class DataManagement extends React.Component {
     const InSizeArray = this.state.sizeArray;
     const InSliderIndex = this.state.sliderIndex;
     const IntotArticles = this.state.newsData_totArticles;
+
     const showNumber_n = determineTabsToShow();
-    const sliderArray = [
+
+    const sliderArrayIndex = [
       Math.max(0, InSliderIndex - showNumber_n),
       Math.min(IntotArticles, InSliderIndex + showNumber_n + 1)
     ];
-    const slicedFilter = InArticles.slice(sliderArray[0], sliderArray[1]);
-    const slicedField = InSizeArray.slice(sliderArray[0], sliderArray[1]);
+    const slicedFilter = InArticles.slice(
+      sliderArrayIndex[0],
+      sliderArrayIndex[1]
+    );
+    const slicedField = InSizeArray.slice(
+      sliderArrayIndex[0],
+      sliderArrayIndex[1]
+    );
 
     const colArray = colorArray(
-      sliderArray[1] - sliderArray[0],
+      sliderArrayIndex[1] - sliderArrayIndex[0],
       InSliderIndex,
       IntotArticles
     );
+
     const filteredNewsArticlesComponents = slicedFilter.map(
       (articleData, index) => {
         return (
@@ -113,7 +128,7 @@ class DataManagement extends React.Component {
               height: 300 * slicedField[index]
             }}
           >
-            <NewsComponent data={articleData} color={colArray[index]} />
+            <NewsCards data={articleData} color={colArray[index]} />
           </span>
         );
       }
@@ -125,31 +140,32 @@ class DataManagement extends React.Component {
     this.setState({ updatedDate: childData });
   };
 
-  handleExternalKeyPress = event => {
+  handleSearchBarEnterEvent = event => {
+    console.log(event);
     if (event.key === "Enter") {
       this.getNews();
     }
   };
 
-  updateExteralInput = event => {
-    console.log(event);
+  updateSearchQueryBar = event => {
+    console.log(this.state.search);
     this.setState({
       search: { query: event.target.value }
     });
   };
 
-  updateSearchCountry = event => {
+  updateSearchCountryBar = event => {
     this.setState({
       search: { country: event.target.value }
     });
   };
 
-  updateDate = event => {
-    console.log(event);
-    this.setState({
-      search: { earliestDate: event.target.value }
-    });
-  };
+  // updateDate = event => {
+  //   console.log(event);
+  //   this.setState({
+  //     search: { earliestDate: event.target.value }
+  //   });
+  // };
   render() {
     return (
       <div className="background">
@@ -166,8 +182,8 @@ class DataManagement extends React.Component {
               type="text"
               placeholder="Search External"
               value={this.state.search.query}
-              onChange={this.updateExteralInput}
-              onKeyPress={this.handleExternalKeyPress}
+              onChange={this.updateSearchQueryBar}
+              onKeyPress={this.handleSearchBarEnterEvent}
             />
           </div>
         </div>
@@ -180,28 +196,32 @@ class DataManagement extends React.Component {
           <div className="page__Options">
             <input
               type="text"
-              placeholder="Options"
+              placeholder="Search Country"
               value={this.state.search.country}
-              onChange={this.updateSearchCountry}
-              onKeyPress={this.handleExternalKeyPress}
+              onChange={this.updateSearchCountryBar}
+              onKeyPress={this.handleSearchBarEnterEvent}
             />
+          </div>
+          <div>
+            
           </div>
           {/* <div>
             <input
               type="date"
               placeholder="EarliestDate"
-              value={this.state.search.earliestDate}
-              onChange={this.updateDate}
-              // onKeyPress={this.handleExternalKeyPress}
-            />
-            <input
-              type="date"
-              placeholder="LatestDate"
-              value={this.state.search.latestDate}
-              onChange={this.updateDate}
-              // onKeyPress={this.handleExternalKeyPress}
-            />
-          </div> */}
+            //   value={this.state.search.earliestDate}
+            //   onChange={this.updateDate}
+            //   // onKeyPress={this.handleSearchBarEnterEvent}
+            // />
+            // <input
+            //   type="date"
+            //   placeholder="LatestDate"
+        //       value={this.state.search.latestDate}
+        //       onChange={this.updateDate}
+        //       // onKeyPress={this.handleSearchBarEnterEvent}
+        //     />
+        //   </div> 
+        // */}
         </div>
         <div className="page__Slider">
           <Sliderbar

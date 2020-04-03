@@ -13,7 +13,6 @@ describe("App", () => {
   //    fireEvent.click(candlesticklink)
   //    expect(XX).toBeInTheDocument();
   //  })
-  it("should ")
 })
 
 // test('renders learn react link', () => {

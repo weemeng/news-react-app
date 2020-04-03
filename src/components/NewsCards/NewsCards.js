@@ -1,8 +1,7 @@
-//This NewsComponent returns a small floating react Component
+//This NewsCard returns a small floating react Component
 
 import React from "react";
-import "./NewsComponent.css";
-import MyOwnDateParser from "./MyOwnDateParser.js";
+import "./NewsCards.css";
 
 function SetDetails(props) {
   let time = new Date(props.time);
@@ -26,7 +25,7 @@ function SetDetails(props) {
   );
 }
 
-class NewsComponent extends React.Component {
+class NewsCard extends React.Component {
   renderArticle(inputArray) {
     if (!inputArray) {
       return;
@@ -57,4 +56,4 @@ class NewsComponent extends React.Component {
   }
 }
 
-export default NewsComponent;
+export default NewsCard;

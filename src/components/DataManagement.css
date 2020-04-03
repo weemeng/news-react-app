@@ -4,11 +4,10 @@
   /* margin:0; */
 }
 .page__Articles {
-    padding-inline-start: 0px;
-    ;
+  padding-inline-start: 0px;
 }
 .page__Title {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: 900;
   font-size: 8vw;
   text-transform: uppercase;
@@ -19,26 +18,26 @@
   text-align: center;
 }
 .page__loadedStatement {
-    border-bottom: 2px solid #2f2f2f;
-    border-top: 2px solid #2f2f2f;
-    text-transform: uppercase;
-    padding: 7px;
-    text-align: center;
+  border-bottom: 2px solid #2f2f2f;
+  border-top: 2px solid #2f2f2f;
+  text-transform: uppercase;
+  padding: 7px;
+  text-align: center;
 }
 .page__Slider {
-    opacity: 0.1;
-    transition: 0.3s ease-in;
-    padding-left: 50px;
-    padding-right: 50px;
-    height: -webkit-fill-available;
-    width: -webkit-fill-available;
-    border-width: thick;
-    padding-bottom: 50px;
-    text-align:center
+  opacity: 0.1;
+  transition: 0.3s ease-in;
+  padding-left: 50px;
+  padding-right: 50px;
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+  border-width: thick;
+  padding-bottom: 50px;
+  text-align: center;
 }
 
 .page__Slider:hover {
-    opacity:1;    
+  opacity: 1;
 }
 
 .page__Searchbar {
@@ -49,7 +48,6 @@
   background: white;
   border-radius: 22px;
   max-width: 70vw;
-  
 }
 .page__Searchbar__Container {
   margin: auto;
@@ -63,11 +61,10 @@ input {
   text-indent: 0px;
   display: inline-block;
   -webkit-appearance: textfield;
-  border-width: 0px;
-  border-style: inset;
+  border-style: hidden;
   outline: none;
-  width: 50vw;
-  transition: 0.3s ease-in; 
+  width: 500vw;
+  transition: 0.3s ease-in;
 }
 input:hover {
   animation: textShiftLeft 0.5s forwards;
@@ -78,5 +75,3 @@ input:hover {
   background: beige;
   cursor: pointer;
 }
-
-

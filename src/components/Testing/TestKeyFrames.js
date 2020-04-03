@@ -89,10 +89,10 @@ class KeyframesTest extends React.Component {
               >
                 {(item, i) => ({ x, ...props }) => (
                   <animated.div
-                    style={{
-                      transform: x.interpolate(x => `translate3d(${x}%,0,0)`),
-                      ...props
-                    }}
+                    // style={{
+                    //   transform: x.interpolate(x => `translate3d(${x}%,0,0)`),
+                    //   ...props
+                    // }}
                   >
                     <Form.Item className={i === 0 ? "middle" : ""}>
                       {item}
