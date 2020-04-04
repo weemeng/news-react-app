@@ -4,7 +4,9 @@ import DataManagement from "./components/DataManagement";
 import About from "./components/About/About";
 import Login from "./components/Login/Login";
 import TestKF from "./components/Testing/TestKeyFrames";
+import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter, Link, Route, Switch, Redirect } from "react-router-dom";
+
 function App() {
   return (
     <BrowserRouter>

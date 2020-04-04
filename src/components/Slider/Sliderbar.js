@@ -52,7 +52,6 @@ class Sliderbar extends Component {
     //update if earliest and latest
     const MS_TO_DAYS = 1 / 1000 / 3600 / 24;
     const { earliest, latest } = this.props;
-    console.log(earliest, latest);
     if (latest - earliest < 10) {
       return;
     } else {

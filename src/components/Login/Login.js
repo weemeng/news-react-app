@@ -1,12 +1,7 @@
 const React = require("react");
-const  { Dropdown } = require("semantic-ui-react");
 const axios = require("../Config/axios");
 require("./Login.css");
 
-const countryOptions = [
-  { key: "us", value: "us", flag: "us", text: "United States" },
-  { key: "sg", value: "sg", flag: "sg", text: "Singapore" },
-];
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -15,36 +10,36 @@ class Login extends React.Component {
       username: "super",
       password: "123456789",
       loginStatus: false,
-      loginFail: false
+      loginFail: false,
     };
   }
   componentDidMount() {
     this.attemptGetRequest();
-    axios.get("").then(res => {
+    axios.get("").then((res) => {
       this.setState({
-        data: JSON.stringify(Object(res.data))
+        data: JSON.stringify(Object(res.data)),
       });
     });
   }
-  setUsername = event => {
+  setUsername = (event) => {
     this.setState({
-      username: event.target.value
+      username: event.target.value,
     });
   };
-  setPasswword = event => {
+  setPasswword = (event) => {
     this.setState({
-      password: event.target.value
+      password: event.target.value,
     });
   };
   attemptGetRequest() {
     axios
       .get("/user")
-      .then(res => {
+      .then((res) => {
         this.setState({
-          loginStatus: true
+          loginStatus: true,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("User not logged in");
       });
   }
@@ -53,18 +48,18 @@ class Login extends React.Component {
     axios
       .post("/user/login", {
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
           loginStatus: true,
-          loginFail: false
+          loginFail: false,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("AXIOS Unable to log in");
         this.setState({
-          loginFail: true
+          loginFail: true,
         });
       });
   }
@@ -72,15 +67,15 @@ class Login extends React.Component {
   attemptLogout() {
     axios
       .post("/user/logout")
-      .then(res => {
+      .then((res) => {
         this.setState({
           username: "",
           password: "",
           loginStatus: false,
-          loginFail: false
+          loginFail: false,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("AXIOS Unable to log out");
         console.log(err);
       });
@@ -90,20 +85,20 @@ class Login extends React.Component {
     axios
       .post("user/newUser", {
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
-          loginFail: false
+          loginFail: false,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Unable to Create New User");
         console.log(err);
       });
   }
 
-  handleEnterKeyPress = event => {
+  handleEnterKeyPress = (event) => {
     if (event.key === "Enter") {
       this.attemptLogin();
     }
@@ -113,15 +108,6 @@ class Login extends React.Component {
     return (
       <div>
         <div>
-          <Dropdown
-            placeholder="Select Country"
-            fluid
-            search
-            selection
-            options={countryOptions}
-          />
-        </div>
-        <div>
           {!this.state.loginStatus ? (
             <div>
               <div>
@@ -130,7 +116,7 @@ class Login extends React.Component {
                   placeholder="Enter Username"
                   value={this.state.username}
                   onChange={this.setUsername}
-                  onKeyPress={event => this.handleEnterKeyPress(event)}
+                  onKeyPress={(event) => this.handleEnterKeyPress(event)}
                 />
               </div>
               <div>
@@ -139,21 +125,21 @@ class Login extends React.Component {
                   placeholder="Enter Password"
                   value={this.state.password}
                   onChange={this.setPasswword}
-                  onKeyPress={event => this.handleEnterKeyPress(event)}
+                  onKeyPress={(event) => this.handleEnterKeyPress(event)}
                 />
               </div>
 
               <button
                 type="submit"
                 placeholder="attemptLogin"
-                onClick={event => this.attemptLogin(event)}
+                onClick={(event) => this.attemptLogin(event)}
               >
                 Login
               </button>
               <button
                 type="submit"
                 placeholder="createNewUser"
-                onClick={event => this.createNewUser(event)}
+                onClick={(event) => this.createNewUser(event)}
               >
                 NewUser
               </button>
@@ -169,7 +155,7 @@ class Login extends React.Component {
             <button
               type="submit"
               placeholder="attemptLogout"
-              onClick={event => this.attemptLogout(event)}
+              onClick={(event) => this.attemptLogout(event)}
               // onKeyPress={this.attemptLogout()}
             >
               Logout

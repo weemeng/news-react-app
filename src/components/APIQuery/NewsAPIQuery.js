@@ -20,7 +20,6 @@ const setQueryStringHerokuEndpoint = search => {
 function setURL(searchInput) {
   const baseURL = `https://intense-sea-36031.herokuapp.com/news`
   const queryURL = setQueryStringHerokuEndpoint(searchInput);
-  console.log(baseURL + queryURL)
   return baseURL + queryURL;
 }
 
