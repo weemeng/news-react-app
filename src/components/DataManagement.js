@@ -24,8 +24,8 @@ class DataManagement extends React.Component {
       newsData_valid: false,
       newsData_totArticles: 50,
       search: {
-        query: React.createRef(),
-        country: "",
+        query: "",
+        country: "sg",
         earliestDate: undefined,
         latestDate: undefined,
       },
@@ -36,6 +36,9 @@ class DataManagement extends React.Component {
       sizeArray: Array(50).fill(1),
       isLoading: false,
       sliderIndex: 0,
+      errorType: {
+        searchError: false,
+      }
     };
   }
 
@@ -67,21 +70,25 @@ class DataManagement extends React.Component {
   getNews() {
     axios(setURL(this.state.search))
       .then((res) => {
-        if (!res.data) {
-          throw new Error("Invalid data");
+        if (res.data.length === 0) {
+          const errorStates = { ...this.state.errorType };
+          errorStates.searchError = true;
+          this.setState({errorType : errorStates})
+          throw new Error("Invalid Search Request");
         }
         const articles = res.data;
         articles.sort(
           (a, b) => a.publisher.publishedAt - b.publisher.publishedAt
         );
-        this.setState({
-          newsData_articles: articles,
-          newsData_valid: true,
-          earliestDate: new Date(
-            articles[articles.length - 1].publisher.publishedAt
-          ),
-          latestDate: new Date(articles[0].publisher.publishedAt),
-        });
+        const allStates = { ...this.state };
+        allStates.newsData_articles = articles;
+        allStates.newsData_valid = true;
+        allStates.earliestDate = new Date(
+          articles[articles.length - 1].publisher.publishedAt
+        );
+        allStates.latestDate = new Date(articles[0].publisher.publishedAt);
+        allStates.errorType.searchError = false;
+        this.setState(allStates)
       })
       .catch((error) => {
         console.log(error.message);
@@ -148,16 +155,16 @@ class DataManagement extends React.Component {
   };
 
   updateSearchQueryBar = (event) => {
-    this.setState({
-      search: { query: event.target.value },
-    });
+    const parseInput = event.target.value.replace(/ /g, "");
+    const searchState = { ...this.state.search };
+    searchState.query = parseInput;
+    this.setState({ search: searchState });
   };
 
   updateSearchCountryBar = (countryValue) => {
-    this.setState({
-      search: { country: countryValue },
-    });
-    this.getNews();
+    const searchState = { ...this.state.search };
+    searchState.country = countryValue;
+    this.setState({ search: searchState });
   };
 
   // updateDate = event => {
@@ -166,6 +173,7 @@ class DataManagement extends React.Component {
   //     search: { earliestDate: event.target.value }
   //   });
   // };
+
   render() {
     return (
       <div className="background">
@@ -180,24 +188,20 @@ class DataManagement extends React.Component {
           <div className="page__Searchbar">
             <input
               type="text"
-              placeholder="Search External"
+              placeholder="Search External (Single word search)"
               ref={this.state.search.query}
-              // value={this.state.search.query}
               onChange={this.updateSearchQueryBar}
               onKeyPress={this.handleSearchBarEnterEvent}
             />
           </div>
         </div>
+        {this.state.errorType.searchError && <span style={{color: "red"}}>*No results : Try searching for another word</span>}
         <div className="page__Options__Container">
           <div className="page__Options">
-            <CountryList updateCountry={this.updateSearchCountryBar} />
-            {/* <input
-              type="text"
-              placeholder="Search Country"
-              value={this.state.search.country}
-              onChange={this.updateSearchCountryBar}
-              onKeyPress={this.handleSearchBarEnterEvent}
-            /> */}
+            <CountryList
+              countryValue={this.state.search.country}
+              updateCountry={this.updateSearchCountryBar}
+            />
           </div>
           <div></div>
           {/* <div>

@@ -6,7 +6,7 @@ const countryOptions = [
   { key: "sg", value: "sg", flag: "sg", text: "Singapore" },
 ];
 
-const CountryList = ({ updateCountry }) => {
+const CountryList = ({ countryValue, updateCountry }) => {
   return (
     <div>
       <Dropdown
@@ -15,6 +15,8 @@ const CountryList = ({ updateCountry }) => {
         selection
         options={countryOptions}
         onChange={(event,data) => updateCountry(data.value)}
+        header="Country"
+        value={countryValue}
       />
     </div>
   );

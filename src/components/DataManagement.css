@@ -40,6 +40,12 @@
   opacity: 1;
 }
 
+.page__Searchbar__Container {
+  margin: auto;
+  min-width: 410px;
+  width: 100vw;
+  text-align: -webkit-center;
+}
 .page__Searchbar {
   cursor: text;
   box-sizing: border-box;
@@ -49,12 +55,8 @@
   border-radius: 22px;
   max-width: 70vw;
 }
-.page__Searchbar__Container {
-  margin: auto;
-  min-width: 410px;
-  width: 100vw;
-  text-align: -webkit-center;
-}
+
+
 input {
   text-rendering: auto;
   color: -internal-light-dark-color(black, white);
