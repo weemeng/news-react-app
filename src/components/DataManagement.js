@@ -1,17 +1,11 @@
 import React from "react";
 import axios from "axios";
-import NewsCards from "./NewsCards/NewsCards";
-// import KeyFramesTest from "./Testing/TestKeyFrames";
 import "./DataManagement.css";
 import CountryList from "./CountryList/CountryList";
 import Sliderbar from "./Slider/Sliderbar";
 import setURL from "./APIQuery/NewsAPIQuery.js";
-import {
-  colorArray,
-  determineTabsToShow,
-  positionClosenessArray,
-} from "../utils/tabLayout.js";
-// const { Menu, Dropdown, Icon, message } = require("antd");
+import { positionClosenessArray } from "./Articles/tabLayout.js";
+import ArticlesViewer from "./Articles/ArticlesViewer";
 
 let oneWeekAgo = new Date();
 oneWeekAgo = new Date(oneWeekAgo.setDate(oneWeekAgo.getDate() - 7));
@@ -38,7 +32,7 @@ class DataManagement extends React.Component {
       sliderIndex: 0,
       errorType: {
         searchError: false,
-      }
+      },
     };
   }
 
@@ -46,9 +40,6 @@ class DataManagement extends React.Component {
     this.getNews();
   }
   componentDidUpdate(prevProps, prevState) {
-    // if (prevState.contentUpdatedTime !== this.state.contentUpdatedTime) {
-    //   this.pageLoadedStatement();
-    // }
     if (!!this.state.newsData_valid) {
       if (prevState.updatedDate !== this.state.updatedDate) {
         this.setArticlePosition(this.state.newsData_articles);
@@ -73,7 +64,7 @@ class DataManagement extends React.Component {
         if (res.data.length === 0) {
           const errorStates = { ...this.state.errorType };
           errorStates.searchError = true;
-          this.setState({errorType : errorStates})
+          this.setState({ errorType: errorStates });
           throw new Error("Invalid Search Request");
         }
         const articles = res.data;
@@ -81,70 +72,23 @@ class DataManagement extends React.Component {
           (a, b) => a.publisher.publishedAt - b.publisher.publishedAt
         );
         const allStates = { ...this.state };
-        allStates.newsData_articles = articles;
         allStates.newsData_valid = true;
+        allStates.newsData_articles = articles;
+        // allStates.newsData_totArticles = articles.length;
         allStates.earliestDate = new Date(
           articles[articles.length - 1].publisher.publishedAt
         );
         allStates.latestDate = new Date(articles[0].publisher.publishedAt);
         allStates.errorType.searchError = false;
-        this.setState(allStates)
+        this.setState(allStates);
+        this.setArticlePosition(this.state.newsData_articles);
       })
       .catch((error) => {
         console.log(error.message);
       });
   }
 
-  renderNewsArticles() {
-    const InArticles = this.state.newsData_articles;
-    const InSizeArray = this.state.sizeArray;
-    const InSliderIndex = this.state.sliderIndex;
-    const IntotArticles = this.state.newsData_totArticles;
-
-    const showNumber_n = determineTabsToShow();
-
-    const sliderArrayIndex = [
-      Math.max(0, InSliderIndex - showNumber_n),
-      Math.min(IntotArticles, InSliderIndex + showNumber_n + 1),
-    ];
-    const slicedFilter = InArticles.slice(
-      sliderArrayIndex[0],
-      sliderArrayIndex[1]
-    );
-    const slicedField = InSizeArray.slice(
-      sliderArrayIndex[0],
-      sliderArrayIndex[1]
-    );
-
-    const colArray = colorArray(
-      sliderArrayIndex[1] - sliderArrayIndex[0],
-      InSliderIndex,
-      IntotArticles
-    );
-    const filteredNewsArticlesComponents = slicedFilter.map(
-      (articleData, index) => {
-        return (
-          <span
-            key={articleData.id}
-            className="articles-inline"
-            style={{
-              width: 300 * slicedField[index],
-              height: 300 * slicedField[index],
-            }}
-          >
-            <NewsCards
-              key={articleData.id}
-              data={articleData}
-              color={colArray[index]}
-            />
-          </span>
-        );
-      }
-    );
-    return filteredNewsArticlesComponents;
-  }
-
-  sliderChildCallbackFunction = (childData) => {
+  updateSliderBar = (childData) => {
     this.setState({ updatedDate: childData });
   };
 
@@ -181,7 +125,7 @@ class DataManagement extends React.Component {
         <div className="page__Title">News Aggregator</div>
         <div className="page__loadedStatement">
           <span>
-            {"Printed at " + this.state.contentUpdatedTime.toDateString()}
+            {"Printed at " + this.state.contentUpdatedTime.toLocaleString()}
           </span>
         </div>
         <div className="page__Searchbar__Container">
@@ -195,7 +139,11 @@ class DataManagement extends React.Component {
             />
           </div>
         </div>
-        {this.state.errorType.searchError && <span style={{color: "red"}}>*No results : Try searching for another word</span>}
+        {this.state.errorType.searchError && (
+          <span style={{ color: "red" }}>
+            *No results : Try searching for another word
+          </span>
+        )}
         <div className="page__Options__Container">
           <div className="page__Options">
             <CountryList
@@ -203,7 +151,6 @@ class DataManagement extends React.Component {
               updateCountry={this.updateSearchCountryBar}
             />
           </div>
-          <div></div>
           {/* <div>
             <input
               type="date"
@@ -226,11 +173,16 @@ class DataManagement extends React.Component {
           <Sliderbar
             earliest={this.state.earliestDate}
             latest={this.state.latestDate}
-            sliderCallback={this.sliderChildCallbackFunction}
+            sliderCallback={this.updateSliderBar}
           />
         </div>
         <div className="page__Articles">
-          {this.state.newsData_valid ? this.renderNewsArticles() : true}
+          <ArticlesViewer
+            InSizeArray={this.state.sizeArray}
+            InArticles={this.state.newsData_articles}
+            InSliderIndex={this.state.sliderIndex}
+            IntotArticles={this.state.newsData_totArticles}
+          />
         </div>
       </div>
     );

@@ -3,7 +3,7 @@ import "./App.css";
 import DataManagement from "./components/DataManagement";
 import About from "./components/About/About";
 import Login from "./components/Login/Login";
-import TestKF from "./components/Testing/TestKeyFrames";
+import Test from "./components/Testing/TestingMain";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter, Link, Route, Switch, Redirect } from "react-router-dom";
 
@@ -21,7 +21,7 @@ function App() {
           <Route path="/newspage" component={DataManagement} />
           <Route path="/about" component={About} />
           <Route path="/login" component={Login} />
-          <Route path="/test" component={TestKF} />
+          <Route path="/test" component={Test} />
           <Redirect to="/newspage" />
         </Switch>
       </div>

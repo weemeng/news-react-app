@@ -7,14 +7,12 @@ import "./Sliderbar.css";
 
 const sliderStyle = {
   position: "relative",
-  width: "100%"
+  width: "100%",
 };
 
 function formatTick(ms) {
   return format(new Date(ms), "MMM dd");
 }
-
-const halfHour = 1000 * 60 * 30;
 
 class Sliderbar extends Component {
   constructor() {
@@ -28,19 +26,19 @@ class Sliderbar extends Component {
       selected: date_init,
       updated: date_init,
       min: date_earliest,
-      max: date_today
+      max: date_today,
     };
   }
 
   onChange = ([ms]) => {
     this.setState({
-      selected: new Date(ms)
+      selected: new Date(ms),
     });
   };
 
   onUpdate = ([ms]) => {
     this.setState({
-      updated: new Date(ms)
+      updated: new Date(ms),
     });
   };
 
@@ -58,7 +56,7 @@ class Sliderbar extends Component {
       const dateDiff = Math.ceil((latest - earliest) * MS_TO_DAYS);
       const date_earliest = subDays(this.state.max, dateDiff);
       this.setState({
-        min: date_earliest
+        min: date_earliest,
       });
     }
   };
@@ -86,7 +84,7 @@ class Sliderbar extends Component {
           width: "100%",
           textAlign: "center",
           fontFamily: "Arial",
-          margin: 5
+          margin: 5,
         }}
       >
         <b>{header}:</b>
@@ -100,11 +98,17 @@ class Sliderbar extends Component {
 
     const dateTicks = scaleTime()
       .domain([min, max])
-      .ticks(8)
-      .map(d => +d);
+      .ticks(20)
+      .map((d) => +d);
 
+    const halfHour = 1000 * 60 * 30;
+    const quaterHour = 1000 * 60 * 15;
+    let dateValue = this.state.updated.toDateString();
+    let timeValue = this.state.updated.toTimeString();
     return (
       <div className="Slider">
+        <div>Date : {dateValue}</div>
+        <div>Time : {timeValue}</div>
         <div className="Slider__inner">
           <Slider
             mode={1}
@@ -121,7 +125,7 @@ class Sliderbar extends Component {
             <Handles>
               {({ handles, getHandleProps }) => (
                 <div>
-                  {handles.map(handle => (
+                  {handles.map((handle) => (
                     <Handle
                       key={handle.id}
                       handle={handle}
@@ -149,7 +153,7 @@ class Sliderbar extends Component {
             <Ticks values={dateTicks}>
               {({ ticks }) => (
                 <div>
-                  {ticks.map(tick => (
+                  {ticks.map((tick) => (
                     <Tick
                       key={tick.id}
                       tick={tick}

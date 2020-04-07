@@ -8,13 +8,11 @@ function SetDetails(props) {
   return (
     <div onClick={() => window.open(props.url)}>
       <p className="news__title">{props.title}</p>
-      <p>
         <img
           src={props.imgsrc}
           alt={props.title}
           className="news__img"          
         ></img>
-      </p>
       <p className="news__sourceDate">
         {props.source} | {time.toDateString()}
       </p>
